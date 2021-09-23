@@ -1,26 +1,31 @@
-using System.Collections.Generic;
-using System.Net;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Http;
+using System;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using NewsAPI.Models;
 
 namespace NewsAPI
 {
     public static class NewsAPI
     {
-        [Function("NewsAPI")]
-        public static HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
-            FunctionContext executionContext)
+        [FunctionName("NewsAPI")]
+        public static async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
+            ILogger log)
         {
-            var logger = executionContext.GetLogger("NewsAPI");
-            logger.LogInformation("C# HTTP trigger function processed a request.");
+            log.LogInformation("C# HTTP trigger function processed a request.");
 
-            var response = req.CreateResponse(HttpStatusCode.OK);
-            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            NewsRequest newsRequest = JsonConvert.DeserializeObject<NewsRequest>(requestBody);
 
-            response.WriteString("Welcome to Azure Functions!!!");
+            string responseMessage = $"News => title:{newsRequest.Title}, text: {newsRequest.Text}, date: {newsRequest.Date}";
 
-            return response;
+            return new OkObjectResult(responseMessage);
         }
     }
 }
