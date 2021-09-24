@@ -16,6 +16,10 @@ namespace NewsAPI
                 new NewsTextStorage(connectionString: Environment.GetEnvironmentVariable("AzureWebJobsStorage"), logger: provider.GetService<ILogger<NewsTextStorage>>())
             );
 
+            builder.Services.AddSingleton<IHtmlPageStorage, HtmlPageStorage>(provider =>
+                new HtmlPageStorage(connectionString: Environment.GetEnvironmentVariable("AzureWebJobsStorage"), logger: provider.GetService<ILogger<HtmlPageStorage>>())
+            );
+
             builder.Services.AddSingleton<IPublishedNewsQueue, PublishedNewsQueue>(provider =>
                 new PublishedNewsQueue(connectionString: Environment.GetEnvironmentVariable("AzureWebJobsStorage"), logger: provider.GetService<ILogger<PublishedNewsQueue>>())
             );

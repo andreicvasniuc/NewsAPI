@@ -63,7 +63,7 @@ namespace NewsAPI.Services
             };
         }
 
-        private bool IsNewsOld(DateTime newsDate) => (DateTime.Now.DayOfYear - newsDate.DayOfYear) > 1;
+        private bool IsNewsOld(DateTime newsDate) => (DateTime.Now.DayOfYear - newsDate.DayOfYear) > 7;
 
         private QueueClient InstantiateQueue(string connectionString)
         {

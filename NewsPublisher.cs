@@ -9,7 +9,7 @@ namespace NewsAPI
     {
         [FunctionName("NewsPublisher")]
         public static void Run(
-            [QueueTrigger("News")] NewsMessage newsMessage,
+            [QueueTrigger("news")] NewsMessage newsMessage,
             ILogger logger,
             [Table("archivednews")] ICollector<NewsEntity> archiveCollector,
             [Queue("publishednews")] ICollector<NewsMessage> publishCollector
