@@ -15,7 +15,7 @@ namespace NewsAPI
 
         [FunctionName("NewsPublishChecker")]
         public async Task Run(
-            [TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, 
+            [TimerTrigger("0 30 9 * Jan Mon")] TimerInfo myTimer,
             ILogger logger,
             [Table("archivednews")] ICollector<NewsEntity> archiveCollector
         )
