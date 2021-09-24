@@ -53,7 +53,7 @@ namespace NewsAPI.Services
             {
                 if (string.IsNullOrEmpty(connectionString)) throw new ArgumentException("Can't be empty", nameof(connectionString));
 
-                var container = new BlobContainerClient(connectionString, blobContainerName: "news-text");
+                var container = new BlobContainerClient(connectionString, blobContainerName: "newstext");
                 container.CreateIfNotExists(publicAccessType: PublicAccessType.BlobContainer);
 
                 return container;

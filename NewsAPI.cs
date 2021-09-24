@@ -22,8 +22,8 @@ namespace NewsAPI
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req, 
             ILogger log,
-            [Table("NewsMetadata")] IAsyncCollector<NewsEntity> newsEntityCollector,
-            [Queue("News")] IAsyncCollector<NewsMessage> newsMessageCollector
+            [Table("newsmetadata")] IAsyncCollector<NewsEntity> newsEntityCollector,
+            [Queue("news")] IAsyncCollector<NewsMessage> newsMessageCollector
         )
         {
             NewsRequest newsRequest = GetNewsRequest(stream: req.Body);
